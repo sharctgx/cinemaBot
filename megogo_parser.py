@@ -6,7 +6,7 @@ import urllib
 
 class_section = "widget searchVideoCatalog_v1 product-main"
 class_div = "card videoItem direction-vertical orientation-portrait size-normal type-normal"
-class_div_content ="card-content video-content"
+class_div_content = "card-content video-content"
 
 def search_films(query):
     """
@@ -14,6 +14,7 @@ def search_films(query):
     """
     url = f'https://megogo.ru/ru/search-extended?q={query}&tab=video'
     req = get(url)
+    print("url:", url, "\n")
     
     soup = BeautifulSoup(req.text, "lxml")
 
