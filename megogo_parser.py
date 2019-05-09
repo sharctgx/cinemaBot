@@ -30,6 +30,6 @@ def search_films(query):
             result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
 
     except AttributeError:
-        print(soup.find('section'))
+        print(req.text)
         
     return result
