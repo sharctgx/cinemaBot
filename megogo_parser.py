@@ -12,7 +12,7 @@ def search_films(query):
     """
     Searches for films. Returns dict {text : link}
     """
-    url = f'https://megogo.ru/ru/search-extended?q={query}'
+    url = f'https://megogo.ru/ru/search-extended?q={query}&tab=video'
     req = get(url)
     
     soup = BeautifulSoup(req.text, "lxml")
