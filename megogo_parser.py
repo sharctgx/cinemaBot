@@ -16,16 +16,19 @@ def search_films(query):
     req = get(url)
     
     soup = BeautifulSoup(req.text, "lxml")
-    
-    section = \
-    soup.find('section', attrs={'class' : class_section})
-    
+
     result = {}
 
-    for film_preview in section.findAll('div', attrs={'class' : class_div}):
-        content = film_preview.find('div', attrs={'class' : class_div_content})
-        link = content.find('a')
-        result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
+    try:
+        section = \
+            soup.find('section', attrs={'class' : class_section})
+
+        for film_preview in section.findAll('div', attrs={'class' : class_div}):
+            content = film_preview.find('div', attrs={'class' : class_div_content})
+            link = content.find('a')
+            result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
+                
+    except AttributeError:
+        print(soup)
         
     return result
-    
