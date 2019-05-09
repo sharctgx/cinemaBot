@@ -1,1 +1,1 @@
-web: python echo_bot_sample.py
+web: gunicorn run_server:server
