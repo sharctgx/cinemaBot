@@ -27,8 +27,8 @@ def search_films(query):
             content = film_preview.find('div', attrs={'class' : class_div_content})
             link = content.find('a')
             result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
-                
+
     except AttributeError:
-        print(soup)
+        print(soup.find('section'))
         
     return result

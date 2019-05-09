@@ -18,7 +18,7 @@ def echo_all(message):
     for k, v in search_films(message.text).items():
         response = response + k + "\n" + v + "\n"
 
-    bot.reply_to(message, response)
+    bot.reply_to(message, response + " ")
 
 
 if __name__ == '__main__':
