@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from requests import get
 import urllib
 
-class_section = 'widget searchVideoCatalog_v1 product-main '
+class_section = "widget searchVideoCatalog_v1 product-main"
 class_div = "card videoItem direction-vertical orientation-portrait size-normal type-normal"
 class_div_content ="card-content video-content"
 
