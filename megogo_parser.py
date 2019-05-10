@@ -6,15 +6,16 @@ import urllib
 
 proxy_dict = {'https':'socks5://91.105.233.236:1080'}
 
-class_section = "widget searchVideoCatalog_v1 product-main "
-class_div = "card videoItem direction-vertical orientation-portrait size-normal type-normal"
-class_div_content = "card-content video-content"
+class_section = ['widget', 'searchExtended_v1', 'product-main']
+class_div = ['card', 'videoItem', 'direction-vertical', 'orientation-portrait',
+             'size-normal', 'type-normal']
+class_div_content = ['card-content', 'video-content']
 
 def search_films(query):
     """
     Searches for films. Returns dict {text : link}
     """
-    url = f'https://megogo.ru/ru/search-extended?q={query}'
+    url = f'https://megogo.ru/ru/search-extended?q={query}&tab=video'
     req = get(url, proxies=proxy_dict)
     
     soup = BeautifulSoup(req.text, "lxml")
