@@ -22,15 +22,17 @@ def search_film(message):
     response = megogo_parser.search_films(message.text)
     
     if response:
+        print(response)
+
         keyboard = types.InlineKeyboardMarkup()
 
-        buttons = [[types.InlineKeyboardButton(text=k, url=v)]\
-            for k, v in response.items()]
-
-        keyboard.add(*buttons)
+        for k, v in response.items():
+            keyboard.add(types.InlineKeyboardButton(text=k, url=v))
 
         bot.reply_to(message, 'Вот что нашёл:', reply_markup=keyboard)
     else:
+        print("No response")
+        
         bot.reply_to(message, "Я не нашёл этот фильм.\
              Возможно, вы найдёте то, что искали, после следующего обновления бота")
 
