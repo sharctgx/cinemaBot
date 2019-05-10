@@ -16,7 +16,6 @@ def search_films(query):
     """
     url = f'https://megogo.ru/ru/search-extended?q={query}'
     req = get(url, proxies=proxy_dict)
-    print("url:", url, "\n")
     
     soup = BeautifulSoup(req.text, "lxml")
 
@@ -27,11 +26,13 @@ def search_films(query):
             soup.find('section', attrs={'class' : class_section})
 
         for film_preview in section.findAll('div', attrs={'class' : class_div}):
+            print("film_preview: ", film_preview, "\n\n")
             content = film_preview.find('div', attrs={'class' : class_div_content})
+            print("content: ", content, "\n\n")
             link = content.find('a')
             result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
 
     except AttributeError:
-        print(soup.findAll('section'))
+        print(section.findAll('div', attrs={'class' : class_div}))
         
     return result
