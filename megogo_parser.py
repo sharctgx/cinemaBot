@@ -3,20 +3,21 @@ import json
 from bs4 import BeautifulSoup
 from requests import get
 import urllib
+from web_config import *
 
-proxy_dict = {'https':'socks5://91.105.233.236:1080'}
 
 class_section = ['widget', 'searchExtended_v1', 'product-main']
 class_div = ['card', 'videoItem', 'direction-vertical', 'orientation-portrait',
              'size-normal', 'type-normal']
 class_div_content = ['card-content', 'video-content']
 
+
 def search_films(query):
     """
     Searches for films. Returns dict {text : link}
     """
     url = f'https://megogo.ru/ru/search-extended?q={query}&tab=video'
-    req = get(url, proxies=proxy_dict)
+    req = get(url, proxies=proxy_dict, headers=header)
     
     soup = BeautifulSoup(req.text, "lxml")
 
@@ -36,3 +37,8 @@ def search_films(query):
             print(s['class'])
         
     return result
+
+
+def get_film_info(url):
+    pass
+
