@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 from requests import get
 import urllib
 
+proxy_dict = {'https':'socks5://91.105.233.236:1080'}
+
 class_section = "widget searchVideoCatalog_v1 product-main "
 class_div = "card videoItem direction-vertical orientation-portrait size-normal type-normal"
 class_div_content = "card-content video-content"
@@ -13,7 +15,7 @@ def search_films(query):
     Searches for films. Returns dict {text : link}
     """
     url = f'https://megogo.ru/ru/search-extended?q={query}'
-    req = get(url, allow_redirects=False)
+    req = get(url, proxies=proxy_dict)
     print("url:", url, "\n")
     
     soup = BeautifulSoup(req.text, "lxml")
