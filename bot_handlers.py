@@ -24,13 +24,12 @@ def search_film(message):
     if response:
         keyboard = types.InlineKeyboardMarkup()
 
-        buttons = [types.InlineKeyboardButton(text=k, callback_data=v)\
+        buttons = [[types.InlineKeyboardButton(text=k, url=v)]\
             for k, v in response.items()]
 
         keyboard.add(*buttons)
 
-        bot.send_message(message.chat.id, 'Вот что нашёл:', reply_markup=keyboard)
-        bot.reply_to(message, response)
+        bot.reply_to(message, 'Вот что нашёл:', reply_markup=keyboard)
     else:
         bot.reply_to(message, "Я не нашёл этот фильм.\
              Возможно, вы найдёте то, что искали, после следующего обновления бота")
