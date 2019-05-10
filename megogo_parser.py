@@ -26,13 +26,12 @@ def search_films(query):
             soup.find('section', attrs={'class' : class_section})
 
         for film_preview in section.findAll('div', attrs={'class' : class_div}):
-            print("film_preview: ", film_preview, "\n\n")
             content = film_preview.find('div', attrs={'class' : class_div_content})
-            print("content: ", content, "\n\n")
             link = content.find('a')
             result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
 
     except AttributeError:
-        print(section.findAll('div', attrs={'class' : class_div}))
+        for s in soup.findAll('section'):
+            print(s['class'])
         
     return result
