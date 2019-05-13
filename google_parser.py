@@ -19,7 +19,7 @@ def get_link(query):
     assert req.status_code == 200, 'request failed'
     soup = BeautifulSoup(req.text, "lxml")
     
-    link = soup.find(class_='g').find("cite").text
+    link = soup.find(class_='g').find(class_= "iUh30").text
     return link
 
 
