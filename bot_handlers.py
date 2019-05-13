@@ -35,9 +35,11 @@ def search_film(message_or_call):
         message = message_or_call
         response = megogo_parser.search_films(message.text)
         dbworker.set_state(message.chat.id, States.S_CHOOSE_OPTION.value)
+        return_search = False
     else:
         message = message_or_call.message
         response = dbworker.get_response(message.chat.id)
+        return_search = True
 
     if response:
         print(response)
@@ -48,15 +50,28 @@ def search_film(message_or_call):
         for idx, film_info in enumerate(response):
             keyboard.add(types.InlineKeyboardButton(text=film_info[0], callback_data="url:" + str(idx)))
 
-        bot.reply_to(message, 'Вот что я нашёл:', reply_markup=keyboard)
+        answer_text = 'Вот что я нашёл:'
+
+        if return_search:
+            bot.edit_message_text(chat_id = message.chat.id, message_id=message.message_id,
+                text=answer_text, reply_markup=keyboard)
+        else:
+            bot.reply_to(message, answer_text, reply_markup=keyboard)
+
     else:
         print("No response")
         keyboard = types.InlineKeyboardMarkup()
         keyboard.add(types.InlineKeyboardButton(text="Мне повезёт!", callback_data="google"))
         dbworker.cache_query(message.chat.id, message.text)
         
-        bot.reply_to(message, "В моих онлайн-сервисах нет этого фильма :(\n" +
-            "Могу попробовать загуглить его для вас.", reply_markup=keyboard)
+        answer_text = "В моих онлайн-сервисах нет этого фильма :(\n" + \
+            "Могу попробовать загуглить его для вас."
+
+        if return_search:
+            bot.edit_message_text(chat_id = message.chat.id, message_id=message.message_id,
+                text=answer_text, reply_markup=keyboard)
+        else:
+            bot.reply_to(message, answer_text, reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == "google")
