@@ -14,16 +14,13 @@ def get_film_info(query):
 
 
 def get_link(query):
-    req = get(G_URL, params={'q' : query}, headers=header)  
+    new_query = query + " смотреть онлайн"
+    req = get(G_URL, params={'q' : new_query}, headers=header)  
     assert req.status_code == 200, 'request failed'
     soup = BeautifulSoup(req.text, "lxml")
     
-    search_res = soup.find('h3', attrs={'class' : 'r'})
-    link = search_res.find('a')
-    if link:
-        return 'http://www.google.com' +  link['href']
-    else:
-        return None
+    link = soup.find(class_='g').find("cite").text
+    return link
 
 
 def get_desc(query):
