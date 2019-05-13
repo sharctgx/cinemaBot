@@ -23,7 +23,7 @@ def search_films(query, limit = 5):
     
     soup = BeautifulSoup(req.text, "lxml")
 
-    result = {}
+    result = []
     n_added = 0
 
     try:
@@ -33,7 +33,7 @@ def search_films(query, limit = 5):
         for film_preview in section.findAll('div', attrs={'class' : class_div}):
             content = film_preview.find('div', attrs={'class' : class_div_content})
             link = content.find('a')
-            result[link.find('h3').text.strip(" \n")] = 'https://megogo.ru' + link['href']
+            result.append((link.find('h3').text.strip(" \n"), 'https://megogo.ru' + link['href']))
             n_added += 1
             if (n_added >= limit):
                 break

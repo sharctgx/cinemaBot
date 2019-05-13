@@ -1,6 +1,7 @@
 from vedis import Vedis
 import os
 from enum import Enum
+import json
 
 
 class States(Enum):
@@ -31,3 +32,24 @@ def set_state(user_id, value):
         except:
             # тут желательно как-то обработать ситуацию
             return False
+
+
+def add_current_search_results(user_id, results_dict):
+    results_оыщт = json.dumps(results_dict)
+
+    with Vedis(os.environ['DB_FILENAME']) as db:
+        try:
+            db[user_id + "res"] = results_json
+            return True
+        except:
+            # тут желательно как-то обработать ситуацию
+            return False
+
+
+def get_result(user_id, idx):
+    with Vedis(os.environ['DB_FILENAME']) as db:
+        try:
+            results_list = json.loads(db[user_id + "res"].decode())
+            return results_list[idx]
+        except (KeyError, IndexError):  # Если такого ключа почему-то не оказалось или idx вышел за пределы
+            return (None, None)

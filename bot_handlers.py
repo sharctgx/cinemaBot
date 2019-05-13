@@ -33,11 +33,12 @@ def search_film(message):
     
     if response:
         print(response)
+        dbworker.add_current_search_results(message.chat.id, response)
 
         keyboard = types.InlineKeyboardMarkup()
 
-        for key, value in response.items():
-            keyboard.add(types.InlineKeyboardButton(text=key, callback_data="url:" + value))
+        for idx, film_info in enumerate(response):
+            keyboard.add(types.InlineKeyboardButton(text=film_info[0], callback_data="url:" + idx))
 
         bot.reply_to(message, 'Вот что я нашёл:', reply_markup=keyboard)
     else:
@@ -49,8 +50,10 @@ def search_film(message):
 
 @bot.callback_query_handler(func=lambda call: call.data[:4] == "url:")
 def choose_option(call):
-    url = call.data[4:]
-    show_film_info(url, chat_id = call.message.chat.id, message_id = call.message.message_id)
+    idx = call.data[4:]
+    film_info = dbworker.get_result(call.message.chat.id, idx)
+
+    show_film_info(film_info[1], chat_id = call.message.chat.id, message_id = call.message.message_id)
     dbworker.set_state(call.message.chat.id, States.S_EVALUATE_OPTION.value)
 
 
