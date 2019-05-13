@@ -30,3 +30,4 @@ gunicorn
 flask
 beautifulsoup4
 lxml
+vedis
