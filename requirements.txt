@@ -31,3 +31,4 @@ flask
 beautifulsoup4
 lxml
 vedis
+google
