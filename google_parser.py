@@ -18,7 +18,7 @@ def get_link(query):
     assert req.status_code == 200, 'request failed'
     soup = BeautifulSoup(req.text, "lxml")
     
-    search_res = soup.findAll('h3', attrs={'class' : 'r'})
+    search_res = soup.find('h3', attrs={'class' : 'r'})
     link = search_res.find('a')
     if link:
         return 'http://www.google.com' +  link['href']
