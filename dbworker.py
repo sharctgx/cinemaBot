@@ -35,11 +35,11 @@ def set_state(user_id, value):
 
 
 def add_current_search_results(user_id, results_dict):
-    results_оыщт = json.dumps(results_dict)
+    results_json = json.dumps(results_dict)
 
     with Vedis(os.environ['DB_FILENAME']) as db:
         try:
-            db[user_id + "res"] = results_json
+            db[str(user_id) + "res"] = results_json
             return True
         except:
             # тут желательно как-то обработать ситуацию
@@ -49,7 +49,7 @@ def add_current_search_results(user_id, results_dict):
 def get_result(user_id, idx):
     with Vedis(os.environ['DB_FILENAME']) as db:
         try:
-            results_list = json.loads(db[user_id + "res"].decode())
+            results_list = json.loads(db[str(user_id) + "res"].decode())
             return results_list[idx]
         except (KeyError, IndexError):  # Если такого ключа почему-то не оказалось или idx вышел за пределы
             return (None, None)
