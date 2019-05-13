@@ -12,7 +12,11 @@ bot = telebot.TeleBot(os.environ['BOT_TOKEN'])
 
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
-    bot.reply_to(message, "Hello, I'm a simple cinema bot in development!")
+    bot.reply_to(
+        message,
+        "Привет, я бот, который ищет фильмы в онлайн-кинотеатрах. Пока из онлайн-кинотеатров " +
+        "доступен только Megogo. Чтобы искать, нажмите /find. Чтобы сбросить поиск, нажмите /reset. " +
+        "Что будем смотреть сегодня?")
 
 
 @bot.message_handler(commands=['find']) 
