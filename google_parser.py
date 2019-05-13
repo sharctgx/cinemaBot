@@ -5,6 +5,7 @@ from requests import get
 import urllib
 from web_config import *
 import random, time
+from googlesearch import search
 
 
 G_URL = 'https://www.google.ru/search'
@@ -16,12 +17,7 @@ def get_film_info(query):
 
 def get_link(query):
     new_query = query + " смотреть онлайн"
-    req = get(G_URL, params={'q' : new_query}, headers=header)  
-    assert req.status_code == 200, 'request failed'
-    soup = BeautifulSoup(req.text, "lxml")
-    
-    link = soup.find(class_='g').find(class_= "iUh30").text
-    return link
+    return next(search(new_query, stop=1))
 
 
 def get_desc(query):
