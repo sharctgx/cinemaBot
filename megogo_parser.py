@@ -54,7 +54,7 @@ def get_film_info(url):
 
     content = soup.find("div", attrs={'class' : class_div_content_film_page})
 
-    description = content.find("div", attrs = {"class" : "show-more"}).text
+    description = content.find("div", attrs = {"class" : "show-more"}).text.split("\n")[0]
     poster_url = content.find("div", attrs = {"class" : "thumb"}).find('img')['src']
 
     # img_data = get(poster_url, proxies=proxy_dict, headers=header).content
