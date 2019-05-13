@@ -14,7 +14,7 @@ def get_film_info(query):
 
 
 def get_link(query):
-    req = get(G_URL, params={'q' : query}, proxies=proxy_dict, headers=header)  
+    req = get(G_URL, params={'q' : query}, headers=header)  
     assert req.status_code == 200, 'request failed'
     soup = BeautifulSoup(req.text, "lxml")
     
@@ -27,7 +27,7 @@ def get_link(query):
 
 
 def get_desc(query):
-    req = get(G_URL, params = {'q' : query}, proxies=proxy_dict, headers=header)    
+    req = get(G_URL, params = {'q' : query}, headers=header)    
     assert req.status_code == 200, 'request failed'
     soup = BeautifulSoup(req.text, "lxml")
 
@@ -44,7 +44,7 @@ def get_desc(query):
 
 def get_poster_link(query):
     new_query = query + " смотреть онлайн"
-    req = get(G_URL, params = {'q' : new_query, 'tbm' : 'isch'}, proxies=proxy_dict, headers=header)
+    req = get(G_URL, params = {'q' : new_query, 'tbm' : 'isch'}, headers=header)
     soup = BeautifulSoup(req.text, "lxml")
 
     try:
