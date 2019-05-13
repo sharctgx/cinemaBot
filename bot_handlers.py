@@ -47,9 +47,10 @@ def search_film(message):
         print("No response")
         keyboard = types.InlineKeyboardMarkup()
         keyboard.add(types.InlineKeyboardButton(text="Мне повезёт!", callback_data="google"))
+        dbworker.cache_query(message.chat.id, message.text)
         
-        bot.reply_to(message, "В моих онлайн-сервисах нет этого фильма :(\n\
-        Могу попробовать загуглить его для вас.", reply_markup=keyboard)
+        bot.reply_to(message, "В моих онлайн-сервисах нет этого фильма :(\n" +
+            "Могу попробовать загуглить его для вас.", reply_markup=keyboard)
 
 
 @bot.callback_query_handler(func=lambda call: call.data == "google")
