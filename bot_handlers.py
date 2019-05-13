@@ -82,6 +82,8 @@ def show_film_info(url_or_query, chat_id, message_id, parser):
     # change message
     film_preview_keyboard = types.InlineKeyboardMarkup()
     film_preview_keyboard.add(types.InlineKeyboardButton(text="Смотреть!", url=link))
+    film_preview_keyboard.add(types.InlineKeyboardButton(text="Назад к поиску", 
+        callback_data="return_search"))
 
     film_preview_text = f"{description}\n\n{poster}"
     
