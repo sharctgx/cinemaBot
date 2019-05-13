@@ -38,7 +38,7 @@ def search_film(message):
         keyboard = types.InlineKeyboardMarkup()
 
         for idx, film_info in enumerate(response):
-            keyboard.add(types.InlineKeyboardButton(text=film_info[0], callback_data="url:" + idx))
+            keyboard.add(types.InlineKeyboardButton(text=film_info[0], callback_data="url:" + str(idx)))
 
         bot.reply_to(message, 'Вот что я нашёл:', reply_markup=keyboard)
     else:
@@ -50,7 +50,7 @@ def search_film(message):
 
 @bot.callback_query_handler(func=lambda call: call.data[:4] == "url:")
 def choose_option(call):
-    idx = call.data[4:]
+    idx = int(call.data[4:])
     film_info = dbworker.get_result(call.message.chat.id, idx)
 
     show_film_info(film_info[1], chat_id = call.message.chat.id, message_id = call.message.message_id)
