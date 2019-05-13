@@ -30,7 +30,6 @@ def set_state(user_id, value):
             db[user_id] = value
             return True
         except:
-            # тут желательно как-то обработать ситуацию
             return False
 
 
@@ -42,7 +41,6 @@ def add_current_search_results(user_id, results_dict):
             db[str(user_id) + "res"] = results_json
             return True
         except:
-            # тут желательно как-то обработать ситуацию
             return False
 
 
@@ -53,3 +51,20 @@ def get_result(user_id, idx):
             return results_list[idx]
         except (KeyError, IndexError):  # Если такого ключа почему-то не оказалось или idx вышел за пределы
             return (None, None)
+
+
+def cache_query(user_id, query):
+    with Vedis(os.environ['DB_FILENAME']) as db:
+        try:
+            db[str(user_id) + "query"] = query
+            return True
+        except:
+            return False
+
+
+def get_last_query(user_id):
+    with Vedis(os.environ['DB_FILENAME']) as db:
+        try:
+            return db[str(user_id)  + "query"].decode()
+        except (KeyError, IndexError):
+            return None
