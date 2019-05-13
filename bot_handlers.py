@@ -29,9 +29,15 @@ def reset(message):
 
 @bot.message_handler(func=lambda message:
      dbworker.get_current_state(message.chat.id) == States.S_ENTER_NAME.value)
-def search_film(message):
-    response = megogo_parser.search_films(message.text)
-    dbworker.set_state(message.chat.id, States.S_CHOOSE_OPTION.value)
+@bot.callback_query_handler(func=lambda call: call.data == "return_search")
+def search_film(message_or_call):
+    if isinstance(message_or_call, types.Message):
+        message = message_or_call
+        response = megogo_parser.search_films(message.text)
+        dbworker.set_state(message.chat.id, States.S_CHOOSE_OPTION.value)
+    else:
+        message = message_or_call.message
+        response = dbworker.get_response(message.chat.id)
 
     if response:
         print(response)

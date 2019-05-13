@@ -53,6 +53,13 @@ def get_result(user_id, idx):
             return (None, None)
 
 
+def get_response(user_id):
+    with Vedis(os.environ['DB_FILENAME']) as db:
+        try:
+            return json.loads(db[str(user_id) + "res"].decode())
+        except KeyError:
+            return None
+
 def cache_query(user_id, query):
     with Vedis(os.environ['DB_FILENAME']) as db:
         try:
