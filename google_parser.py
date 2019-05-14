@@ -15,22 +15,15 @@ def get_film_info(query):
     return get_desc(query), get_poster_link(query), get_link(query)
 
 
-def sleep():
-    wt = random.uniform(2, 5)
-    time.sleep(wt)
-
-
-
 def get_link(query):
     new_query = query + " смотреть онлайн"
     return next(search(new_query, stop=1))
 
 
 def get_desc(query):
-    sleep()
-    req = get(G_URL, params = {'q' : query}, headers=header, proxies=proxy_dict)    
+    req = get(G_URL, params = {'q' : query}, headers=header)    
     if (req.status_code != 200):
-        raise Exception(req.status_code)
+        raise ConnectionError(req.status_code)
     soup = BeautifulSoup(req.text, "lxml")
 
     # get description
@@ -45,9 +38,10 @@ def get_desc(query):
 
 
 def get_poster_link(query):
-    sleep()
     new_query = query + " смотреть онлайн"
-    req = get(G_URL, params = {'q' : new_query, 'tbm' : 'isch'}, headers=header, proxies=proxy_dict)
+    req = get(G_URL, params = {'q' : new_query, 'tbm' : 'isch'}, headers=header)
+    if (req.status_code != 200):
+        raise ConnectionError(req.status_code)
     soup = BeautifulSoup(req.text, "lxml")
 
     try:
