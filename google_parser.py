@@ -29,7 +29,8 @@ def get_link(query):
 def get_desc(query):
     sleep()
     req = get(G_URL, params = {'q' : query}, headers=header, proxies=proxy_dict)    
-    assert req.status_code == 200, 'request failed'
+    if (req.status_code != 200):
+        raise Exception(req.status_code)
     soup = BeautifulSoup(req.text, "lxml")
 
     # get description
