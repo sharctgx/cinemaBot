@@ -21,7 +21,7 @@ def get_link(query):
 
 
 def get_desc(query):
-    req = get(G_URL, params = {'q' : query}, headers=header)    
+    req = get(G_URL, params = {'q' : query, "gl" : "ru", "hl" : "ru", "lr": "lang_ru"}, headers=header)    
     if (req.status_code != 200):
         raise ConnectionError(req.status_code)
     soup = BeautifulSoup(req.text, "lxml")
